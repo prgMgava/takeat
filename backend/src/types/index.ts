@@ -1,10 +1,7 @@
 import { Request } from 'express';
 import { Model, Optional } from 'sequelize';
 
-// User roles
 export type UserRole = 'ADMIN' | 'RESTAURANT_OWNER' | 'CUSTOMER';
-
-// Order status
 export type OrderStatus =
   | 'PENDING'
   | 'CONFIRMED'
@@ -14,7 +11,6 @@ export type OrderStatus =
   | 'DELIVERED'
   | 'CANCELLED';
 
-// User attributes
 export interface UserAttributes {
   id: string;
   email: string;
@@ -30,7 +26,6 @@ export interface UserAttributes {
 
 export interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'phone' | 'role' | 'isActive' | 'emailVerified'> {}
 
-// RefreshToken attributes
 export interface RefreshTokenAttributes {
   id: string;
   token: string;
@@ -43,7 +38,6 @@ export interface RefreshTokenAttributes {
 
 export interface RefreshTokenCreationAttributes extends Optional<RefreshTokenAttributes, 'id' | 'isRevoked'> {}
 
-// Restaurant attributes
 export interface RestaurantAttributes {
   id: string;
   ownerId: string;
@@ -74,7 +68,6 @@ export interface RestaurantCreationAttributes extends Optional<RestaurantAttribu
   'deliveryFee' | 'minOrderValue' | 'estimatedDeliveryTime' | 'isOpen' | 'isActive' |
   'rating' | 'totalRatings'> {}
 
-// Category attributes
 export interface CategoryAttributes {
   id: string;
   restaurantId: string;
@@ -88,7 +81,6 @@ export interface CategoryAttributes {
 
 export interface CategoryCreationAttributes extends Optional<CategoryAttributes, 'id' | 'description' | 'sortOrder' | 'isActive'> {}
 
-// Product attributes
 export interface ProductAttributes {
   id: string;
   restaurantId: string;
@@ -106,7 +98,6 @@ export interface ProductAttributes {
 
 export interface ProductCreationAttributes extends Optional<ProductAttributes, 'id' | 'description' | 'imageUrl' | 'isAvailable' | 'isActive' | 'sortOrder'> {}
 
-// ProductOption attributes
 export interface ProductOptionAttributes {
   id: string;
   productId: string;
@@ -122,7 +113,6 @@ export interface ProductOptionAttributes {
 
 export interface ProductOptionCreationAttributes extends Optional<ProductOptionAttributes, 'id' | 'description' | 'isRequired' | 'minSelections' | 'maxSelections' | 'sortOrder'> {}
 
-// OptionItem attributes
 export interface OptionItemAttributes {
   id: string;
   optionId: string;
@@ -137,7 +127,6 @@ export interface OptionItemAttributes {
 
 export interface OptionItemCreationAttributes extends Optional<OptionItemAttributes, 'id' | 'price' | 'isDefault' | 'isAvailable' | 'sortOrder'> {}
 
-// Input attributes (insumos/ingredientes)
 export interface InputAttributes {
   id: string;
   restaurantId: string;
@@ -154,7 +143,6 @@ export interface InputAttributes {
 
 export interface InputCreationAttributes extends Optional<InputAttributes, 'id' | 'description' | 'unit' | 'stockQuantity' | 'minStock' | 'costPerUnit' | 'isActive'> {}
 
-// ProductInput attributes (ficha técnica)
 export interface ProductInputAttributes {
   id: string;
   productId: string;
@@ -166,7 +154,6 @@ export interface ProductInputAttributes {
 
 export interface ProductInputCreationAttributes extends Optional<ProductInputAttributes, 'id'> {}
 
-// Order attributes
 export interface OrderAttributes {
   id: string;
   orderNumber: string;
@@ -197,7 +184,6 @@ export interface OrderCreationAttributes extends Optional<OrderAttributes,
   'id' | 'orderNumber' | 'status' | 'notes' | 'confirmedAt' | 'preparingAt' |
   'readyAt' | 'outForDeliveryAt' | 'deliveredAt' | 'cancelledAt' | 'cancellationReason'> {}
 
-// OrderItem attributes
 export interface OrderItemAttributes {
   id: string;
   orderId: string;
@@ -213,7 +199,6 @@ export interface OrderItemAttributes {
 
 export interface OrderItemCreationAttributes extends Optional<OrderItemAttributes, 'id' | 'notes'> {}
 
-// OrderItemOption attributes
 export interface OrderItemOptionAttributes {
   id: string;
   orderItemId: string;
@@ -226,13 +211,11 @@ export interface OrderItemOptionAttributes {
 
 export interface OrderItemOptionCreationAttributes extends Optional<OrderItemOptionAttributes, 'id'> {}
 
-// Extended Express Request with user
 export interface AuthenticatedRequest extends Request {
   user?: UserAttributes & { id: string };
   userId?: string;
 }
 
-// API Response type
 export interface ApiResponse<T = unknown> {
   success: boolean;
   message?: string;
@@ -240,7 +223,6 @@ export interface ApiResponse<T = unknown> {
   code?: string;
 }
 
-// Pagination
 export interface PaginationParams {
   page?: number;
   limit?: number;
@@ -256,7 +238,6 @@ export interface PaginatedResponse<T> {
   totalPages: number;
 }
 
-// JWT Payload
 export interface JwtPayload {
   sub: string;
   role?: UserRole;

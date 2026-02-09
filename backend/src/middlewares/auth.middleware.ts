@@ -84,7 +84,7 @@ export const optionalAuth = async (
         req.userId = user.id;
       }
     } catch (error) {
-      // Token invalid, continue without user
+
     }
 
     next();

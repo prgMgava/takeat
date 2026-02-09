@@ -250,7 +250,7 @@ export default function Cart() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
-      {/* Stock Alert Modal */}
+
       {stockError && (
         <StockAlert
           products={stockError}
@@ -263,7 +263,7 @@ export default function Cart() {
       <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Carrinho</h1>
 
       <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
-        {/* Cart Items */}
+
         <div className="lg:col-span-2 space-y-4">
           <div className="bg-white rounded-lg shadow-md p-4">
             <div className="flex items-center justify-between mb-4">
@@ -338,7 +338,7 @@ export default function Cart() {
             })}
           </div>
 
-          {/* Stock Status Indicator */}
+
           {stockChecked && !stockError && (
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
               <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
@@ -349,7 +349,7 @@ export default function Cart() {
           )}
         </div>
 
-        {/* Checkout Form */}
+
         <div className="lg:col-span-1">
           <form
             ref={formRef}
@@ -358,7 +358,7 @@ export default function Cart() {
           >
             <h2 className="font-semibold text-lg mb-4">Finalizar Pedido</h2>
 
-            {/* Delivery Type */}
+
             <div className="mb-4">
               <label className="block text-sm font-medium mb-2">Tipo de entrega</label>
               <div className="grid grid-cols-2 gap-2">
@@ -395,7 +395,7 @@ export default function Cart() {
               </div>
             </div>
 
-            {/* Delivery Address Fields */}
+
             {isDelivery && (
               <div className="space-y-3 mb-4">
                 <div>
@@ -453,7 +453,7 @@ export default function Cart() {
               </div>
             )}
 
-            {/* Payment Method */}
+
             <div className="mb-4">
               <label className="block text-sm font-medium mb-2">Forma de pagamento</label>
               <div className="grid grid-cols-2 gap-2">
@@ -483,7 +483,7 @@ export default function Cart() {
               </div>
             </div>
 
-            {/* Notes */}
+
             <div className="mb-4">
               <label className="block text-sm font-medium mb-1">Observações</label>
               <textarea
@@ -494,7 +494,7 @@ export default function Cart() {
               />
             </div>
 
-            {/* Order Summary */}
+
             <div className="border-t pt-4 space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-600">Subtotal ({items.length} {items.length === 1 ? 'item' : 'itens'})</span>
@@ -512,7 +512,7 @@ export default function Cart() {
               </div>
             </div>
 
-            {/* Submit Button */}
+
             <button
               type="submit"
               disabled={loading || checkingStock}
@@ -528,7 +528,7 @@ export default function Cart() {
               )}
             </button>
 
-            {/* Security Note */}
+
             <p className="text-xs text-gray-500 text-center mt-3">
               🔒 Pagamento seguro • Seus dados estão protegidos
             </p>

@@ -30,21 +30,21 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            {/* Public routes */}
+
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="restaurants" element={<Restaurants />} />
             <Route path="restaurants/:id" element={<RestaurantDetail />} />
 
-            {/* Authenticated routes */}
+
             <Route element={<ProtectedRoute />}>
               <Route path="cart" element={<Cart />} />
               <Route path="orders" element={<Orders />} />
               <Route path="orders/:id" element={<OrderDetail />} />
             </Route>
 
-            {/* Restaurant owner routes */}
+
             <Route element={<ProtectedRoute allowedRoles={['RESTAURANT_OWNER', 'ADMIN']} />}>
               <Route path="dashboard" element={<Dashboard />} />
             </Route>

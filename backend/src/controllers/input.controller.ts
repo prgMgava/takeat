@@ -4,9 +4,7 @@ import { sequelize, Input, ProductInput, Product, Restaurant } from '../models';
 import { AppError } from '../middlewares/error.middleware';
 import logger from '../utils/logger';
 
-/**
- * Create a new input (ingredient)
- */
+
 export const create = async (
   req: Request,
   res: Response,
@@ -15,7 +13,7 @@ export const create = async (
   try {
     const { restaurantId, name, description, unit, stockQuantity, minStock, costPerUnit } = req.body;
 
-    // Verify restaurant exists and user has permission
+
     const restaurant = await Restaurant.findByPk(restaurantId);
     if (!restaurant) {
       throw new AppError('Restaurante não encontrado', 404, 'RESTAURANT_NOT_FOUND');
@@ -25,7 +23,7 @@ export const create = async (
       throw new AppError('Sem permissão para este restaurante', 403, 'FORBIDDEN');
     }
 
-    // Check for duplicate name in same restaurant
+
     const existing = await Input.findOne({
       where: { restaurantId, name: { [Op.iLike]: name } },
     });
@@ -55,9 +53,7 @@ export const create = async (
   }
 };
 
-/**
- * List all inputs for a restaurant
- */
+
 export const findByRestaurant = async (
   req: Request,
   res: Response,
@@ -81,7 +77,7 @@ export const findByRestaurant = async (
       order: [['name', 'ASC']],
     });
 
-    // Filter low stock if requested
+
     let items = inputs.rows;
     if (lowStock === 'true') {
       items = inputs.rows.filter(input => input.stockQuantity <= input.minStock);
@@ -101,9 +97,7 @@ export const findByRestaurant = async (
   }
 };
 
-/**
- * Get a single input by ID
- */
+
 export const findOne = async (
   req: Request,
   res: Response,
@@ -135,9 +129,7 @@ export const findOne = async (
   }
 };
 
-/**
- * Update an input
- */
+
 export const update = async (
   req: Request,
   res: Response,
@@ -161,7 +153,7 @@ export const update = async (
       throw new AppError('Sem permissão para este insumo', 403, 'FORBIDDEN');
     }
 
-    // Check for duplicate name if changing
+
     if (name && name !== input.name) {
       const existing = await Input.findOne({
         where: {
@@ -197,9 +189,7 @@ export const update = async (
   }
 };
 
-/**
- * Adjust stock quantity (add or remove)
- */
+
 export const adjustStock = async (
   req: Request,
   res: Response,
@@ -263,9 +253,7 @@ export const adjustStock = async (
   }
 };
 
-/**
- * Delete an input (soft delete)
- */
+
 export const remove = async (
   req: Request,
   res: Response,
@@ -288,7 +276,7 @@ export const remove = async (
       throw new AppError('Sem permissão para este insumo', 403, 'FORBIDDEN');
     }
 
-    // Soft delete
+
     await input.update({ isActive: false });
 
     logger.info(`Input deleted: ${input.name}`);
@@ -302,9 +290,7 @@ export const remove = async (
   }
 };
 
-/**
- * Set product technical sheet (ficha técnica)
- */
+
 export const setProductInputs = async (
   req: Request,
   res: Response,
@@ -314,7 +300,7 @@ export const setProductInputs = async (
 
   try {
     const { productId } = req.params;
-    const { inputs } = req.body; // Array of { inputId, quantity }
+    const { inputs } = req.body;
 
     const product = await Product.findByPk(productId, {
       include: [{ model: Restaurant, as: 'restaurant' }],
@@ -330,13 +316,13 @@ export const setProductInputs = async (
       throw new AppError('Sem permissão para este produto', 403, 'FORBIDDEN');
     }
 
-    // Delete existing product inputs
+
     await ProductInput.destroy({
       where: { productId },
       transaction,
     });
 
-    // Create new product inputs
+
     const productInputs = [];
     for (const item of inputs) {
       const input = await Input.findOne({
@@ -377,9 +363,7 @@ export const setProductInputs = async (
   }
 };
 
-/**
- * Get product technical sheet (ficha técnica)
- */
+
 export const getProductInputs = async (
   req: Request,
   res: Response,
@@ -423,16 +407,14 @@ export const getProductInputs = async (
   }
 };
 
-/**
- * Check stock availability for an order
- */
+
 export const checkStockAvailability = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { items } = req.body; // Array of { productId, quantity }
+    const { items } = req.body;
 
     const stockStatus: Array<{
       productId: string;

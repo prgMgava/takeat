@@ -98,7 +98,7 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Restaurant Header */}
+
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">
@@ -141,7 +141,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Stats */}
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white rounded-lg shadow-md p-4">
           <div className="flex items-center gap-3">
@@ -189,7 +189,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Quick Actions */}
+
       <div className="flex gap-4 mb-8 flex-wrap">
         <Link
           to="/dashboard/products"
@@ -207,7 +207,7 @@ export default function Dashboard() {
         </Link>
       </div>
 
-      {/* Pending Orders */}
+
       {pendingOrders.length > 0 && (
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
@@ -251,7 +251,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* In Progress Orders */}
+
       {preparingOrders.length > 0 && (
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-lg font-semibold mb-4">Em Preparo ({preparingOrders.length})</h2>

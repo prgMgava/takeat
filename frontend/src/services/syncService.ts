@@ -10,9 +10,7 @@ interface SyncResult {
   errors: Array<{ queueId: string; error: string }>;
 }
 
-/**
- * Processa um único pedido da fila
- */
+
 async function processQueuedOrder(order: QueuedOrder): Promise<{
   success: boolean;
   orderId?: string;
@@ -46,7 +44,7 @@ async function processQueuedOrder(order: QueuedOrder): Promise<{
       orderNumber: response.data.data.order.orderNumber,
     };
   } catch (error: unknown) {
-    // Erro de rede - manter na fila para retry
+
     if (isNetworkError(error)) {
       return {
         success: false,
@@ -55,7 +53,7 @@ async function processQueuedOrder(order: QueuedOrder): Promise<{
       };
     }
 
-    // Erro de estoque - conflito tardio
+
     const axiosError = error as { response?: { data?: { code?: string; message?: string; data?: { products?: QueuedOrder['stockConflict'] } } } };
 
     if (axiosError.response?.data?.code === 'INSUFFICIENT_STOCK') {
@@ -67,7 +65,7 @@ async function processQueuedOrder(order: QueuedOrder): Promise<{
       };
     }
 
-    // Outros erros de servidor
+
     return {
       success: false,
       error: axiosError.response?.data?.message || 'Erro ao processar pedido',
@@ -105,7 +103,7 @@ export async function syncOfflineQueue(): Promise<SyncResult> {
   };
 
   for (const order of pendingOrders) {
-    // Verificar se já tentou muitas vezes
+
     if (order.retryCount >= order.maxRetries) {
       store.updateStatus(order.id, 'failed', 'Número máximo de tentativas excedido', 'MAX_RETRIES');
       result.failed++;
@@ -113,34 +111,34 @@ export async function syncOfflineQueue(): Promise<SyncResult> {
       continue;
     }
 
-    // Marcar como processando
+
     store.updateStatus(order.id, 'processing');
     store.incrementRetry(order.id);
 
-    // Tentar processar
+
     const processResult = await processQueuedOrder(order);
 
     if (processResult.success) {
-      // Sucesso!
+
       store.setOrderResult(order.id, processResult.orderId!, processResult.orderNumber!);
       result.processed++;
       console.log(`[Sync] Pedido ${order.id} sincronizado com sucesso: ${processResult.orderNumber}`);
     } else if (processResult.errorCode === 'NETWORK_ERROR') {
-      // Erro de rede - voltar para pending para tentar depois
+
       store.updateStatus(order.id, 'pending', processResult.error, processResult.errorCode);
       result.success = false;
       console.log(`[Sync] Pedido ${order.id} falhou por erro de rede, será tentado novamente`);
-      // Parar sincronização se não há conexão
+
       break;
     } else if (processResult.stockConflict) {
-      // Conflito de estoque - marcar como falhou com detalhes
+
       store.setStockConflict(order.id, processResult.stockConflict);
       store.updateStatus(order.id, 'failed', processResult.error, processResult.errorCode);
       result.failed++;
       result.errors.push({ queueId: order.id, error: processResult.error || 'Estoque insuficiente' });
       console.log(`[Sync] Pedido ${order.id} falhou por estoque insuficiente`);
     } else {
-      // Outro erro - marcar como falhou
+
       store.updateStatus(order.id, 'failed', processResult.error, processResult.errorCode);
       result.failed++;
       result.errors.push({ queueId: order.id, error: processResult.error || 'Erro desconhecido' });

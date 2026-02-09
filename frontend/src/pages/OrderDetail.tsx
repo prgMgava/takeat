@@ -109,7 +109,7 @@ export default function OrderDetail() {
           </span>
         </div>
 
-        {/* Restaurant Info */}
+
         <div className="border-b pb-4 mb-4">
           <h2 className="font-semibold mb-2">{order.restaurant?.name}</h2>
           <p className="text-sm text-gray-500 flex items-center">
@@ -118,7 +118,7 @@ export default function OrderDetail() {
           </p>
         </div>
 
-        {/* Order Items */}
+
         <div className="border-b pb-4 mb-4">
           <h3 className="font-semibold mb-3">Itens do Pedido</h3>
           {order.items?.map((item) => (
@@ -136,7 +136,7 @@ export default function OrderDetail() {
           ))}
         </div>
 
-        {/* Delivery Info */}
+
         {order.isDelivery && order.deliveryAddress && (
           <div className="border-b pb-4 mb-4">
             <h3 className="font-semibold mb-2">Endereço de Entrega</h3>
@@ -144,13 +144,13 @@ export default function OrderDetail() {
           </div>
         )}
 
-        {/* Payment Info */}
+
         <div className="border-b pb-4 mb-4">
           <h3 className="font-semibold mb-2">Pagamento</h3>
           <p className="text-gray-600">{paymentLabels[order.paymentMethod]}</p>
         </div>
 
-        {/* Totals */}
+
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
             <span>Subtotal</span>
@@ -172,7 +172,7 @@ export default function OrderDetail() {
           </div>
         </div>
 
-        {/* Cancel Button */}
+
         {canCancel && (
           <button
             onClick={handleCancel}
@@ -190,7 +190,7 @@ export default function OrderDetail() {
           </button>
         )}
 
-        {/* Notes */}
+
         {order.notes && (
           <div className="mt-4 p-3 bg-gray-50 rounded-lg">
             <p className="text-sm text-gray-600">

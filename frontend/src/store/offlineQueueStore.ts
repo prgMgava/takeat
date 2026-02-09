@@ -11,7 +11,7 @@ export interface QueuedOrder {
   maxRetries: number;
   lastError?: string;
   errorCode?: string;
-  // Order data
+
   restaurantId: string;
   restaurantName: string;
   items: Array<{
@@ -32,10 +32,10 @@ export interface QueuedOrder {
   deliveryPhone?: string;
   notes?: string;
   total: number;
-  // Response data when successful
+
   orderNumber?: string;
   orderId?: string;
-  // Conflict data
+
   stockConflict?: Array<{
     productId: string;
     productName: string;
@@ -53,7 +53,7 @@ interface OfflineQueueState {
   isOnline: boolean;
   isSyncing: boolean;
   lastSyncAttempt: string | null;
-  // Actions
+
   addToQueue: (order: Omit<QueuedOrder, 'id' | 'createdAt' | 'status' | 'retryCount' | 'maxRetries'>) => string;
   removeFromQueue: (id: string) => void;
   updateStatus: (id: string, status: QueueItemStatus, error?: string, errorCode?: string) => void;

@@ -12,22 +12,9 @@ import { orderService } from '../services';
 import logger from '../utils/logger';
 import { OrderStatus } from '../types';
 
-/**
- * Controller de Pedidos
- * 
- * Responsabilidades:
- * - Extrair dados da requisição HTTP
- * - Validar parâmetros de entrada básicos
- * - Chamar o Service apropriado para lógica de negócios
- * - Formatar e retornar a resposta HTTP
- * 
- * A lógica de negócios complexa está no OrderService
- */
 
-/**
- * Cria um novo pedido
- * POST /orders
- */
+
+
 export const create = async (
   req: Request,
   res: Response,
@@ -45,7 +32,7 @@ export const create = async (
       notes,
     } = req.body;
 
-    // Delegar criação para o Service (inclui validação de estoque atômico)
+
     const order = await orderService.createOrder({
       restaurantId,
       customerId: req.user!.id,
@@ -68,10 +55,7 @@ export const create = async (
   }
 };
 
-/**
- * Lista pedidos com filtros e paginação
- * GET /orders
- */
+
 export const findAll = async (
   req: Request,
   res: Response,
@@ -92,7 +76,7 @@ export const findAll = async (
     const offset = (parseInt(page as string) - 1) * parseInt(limit as string);
     const where: Record<string, unknown> = {};
 
-    // Filtrar por role do usuário
+
     if (req.user!.role === 'CUSTOMER') {
       where.customerId = req.user!.id;
     } else if (req.user!.role === 'RESTAURANT_OWNER') {
@@ -124,7 +108,7 @@ export const findAll = async (
       where.status = status;
     }
 
-    // Filtro por data
+
     if (startDate || endDate) {
       where.createdAt = {};
       if (startDate) {
@@ -178,10 +162,7 @@ export const findAll = async (
   }
 };
 
-/**
- * Busca um pedido por ID
- * GET /orders/:id
- */
+
 export const findOne = async (
   req: Request,
   res: Response,

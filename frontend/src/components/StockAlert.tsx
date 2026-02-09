@@ -22,7 +22,7 @@ export default function StockAlert({ products, onClose, onRemoveItem, onRetry }:
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[80vh] overflow-hidden animate-fade-in">
-        {/* Header */}
+
         <div className="bg-red-500 text-white p-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-6 w-6" />
@@ -37,7 +37,7 @@ export default function StockAlert({ products, onClose, onRemoveItem, onRetry }:
           </button>
         </div>
 
-        {/* Content */}
+
         <div className="p-4 overflow-y-auto max-h-[50vh]">
           <p className="text-gray-600 mb-4">
             Os seguintes produtos não têm ingredientes suficientes em estoque:
@@ -76,7 +76,7 @@ export default function StockAlert({ products, onClose, onRemoveItem, onRetry }:
             ))}
           </div>
 
-          {/* Available products info */}
+
           {availableProducts.length > 0 && (
             <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
               <p className="text-sm text-green-700">
@@ -91,7 +91,7 @@ export default function StockAlert({ products, onClose, onRemoveItem, onRetry }:
           )}
         </div>
 
-        {/* Footer */}
+
         <div className="p-4 border-t bg-gray-50 space-y-2">
           {availableProducts.length > 0 ? (
             <>

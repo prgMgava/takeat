@@ -5,7 +5,7 @@ import { authMiddleware, requireRole, validate, optionalAuth } from '../middlewa
 
 const router = Router();
 
-// Validation rules
+
 const createCategoryValidation = [
   body('restaurantId').isUUID().withMessage('ID do restaurante inválido'),
   body('name').trim().notEmpty().withMessage('Nome é obrigatório'),
@@ -28,11 +28,11 @@ const reorderValidation = [
   body('orderedIds.*').isUUID().withMessage('ID de categoria inválido'),
 ];
 
-// Public routes
+
 router.get('/restaurant/:restaurantId', optionalAuth, categoryController.findByRestaurant);
 router.get('/:id', optionalAuth, categoryController.findOne);
 
-// Protected routes
+
 router.post(
   '/',
   authMiddleware,

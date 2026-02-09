@@ -13,7 +13,7 @@ export const create = async (
 
     // Verify restaurant ownership
     const restaurant = await Restaurant.findByPk(restaurantId);
-    if (!restaurant) {
+
       throw new AppError('Restaurante não encontrado', 404, 'RESTAURANT_NOT_FOUND');
     }
 
@@ -84,7 +84,7 @@ export const findOne = async (
     const { id } = req.params;
 
     const category = await Category.findOne({
-      where: { id, isActive: true },
+
       include: [
         {
           model: Product,
@@ -136,13 +136,13 @@ export const update = async (
       throw new AppError('Categoria não encontrada', 404, 'CATEGORY_NOT_FOUND');
     }
 
-    // Check ownership
+
     const restaurant = (category as Category & { restaurant: Restaurant }).restaurant;
     if (restaurant.ownerId !== req.user!.id && req.user!.role !== 'ADMIN') {
       throw new AppError('Você não tem permissão para editar esta categoria', 403, 'FORBIDDEN');
     }
 
-    await category.update({
+
       name: name ?? category.name,
       description: description ?? category.description,
       sortOrder: sortOrder ?? category.sortOrder,
@@ -165,7 +165,7 @@ export const remove = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> => {
+
   try {
     const { id } = req.params;
 
@@ -175,7 +175,7 @@ export const remove = async (
           model: Restaurant,
           as: 'restaurant',
           attributes: ['id', 'ownerId'],
-        },
+
       ],
     });
 

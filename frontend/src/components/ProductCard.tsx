@@ -30,7 +30,7 @@ export default function ProductCard({ product, restaurantId, restaurantName }: P
       return;
     }
 
-    // Check required options
+
     const requiredOptions = product.options?.filter((o) => o.isRequired) || [];
     for (const option of requiredOptions) {
       if (!selectedOptions[option.id] || selectedOptions[option.id].length < option.minSelections) {
@@ -65,7 +65,7 @@ export default function ProductCard({ product, restaurantId, restaurantName }: P
       })),
     });
 
-    // Visual feedback
+
     setAddedToCart(true);
     toast.success('Item adicionado ao carrinho');
 

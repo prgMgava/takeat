@@ -10,8 +10,8 @@ export const createRateLimiter = (
   options: Partial<Options> = {}
 ): RateLimitRequestHandler => {
   const defaults: Partial<Options> = {
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
+    windowMs: 15 * 60 * 1000,
+    max: 100,
     message: {
       success: false,
       message: 'Muitas requisições, tente novamente mais tarde',
@@ -24,13 +24,13 @@ export const createRateLimiter = (
   return rateLimit({ ...defaults, ...options });
 };
 
-// General API rate limiter
+
 export const apiLimiter = createRateLimiter();
 
-// Stricter limiter for auth routes
+
 export const authLimiter = createRateLimiter({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // 10 requests per window
+  windowMs: 15 * 60 * 1000,
+  max: 10,
   message: {
     success: false,
     message: 'Muitas tentativas de login, tente novamente em 15 minutos',
@@ -38,10 +38,10 @@ export const authLimiter = createRateLimiter({
   } as RateLimitMessage,
 });
 
-// Strict limiter for password reset
+
 export const passwordResetLimiter = createRateLimiter({
-  windowMs: 60 * 60 * 1000, // 1 hour
-  max: 5, // 5 requests per hour
+  windowMs: 60 * 60 * 1000,
+  max: 5,
   message: {
     success: false,
     message: 'Muitas tentativas de reset de senha, tente novamente em 1 hora',

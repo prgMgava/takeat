@@ -8,7 +8,7 @@ import inputRoutes from './input.routes';
 
 const router = Router();
 
-// Health check
+
 router.get('/health', (_req: Request, res: Response) => {
   res.json({
     success: true,
@@ -17,7 +17,7 @@ router.get('/health', (_req: Request, res: Response) => {
   });
 });
 
-// API routes
+
 router.use('/auth', authRoutes);
 router.use('/restaurants', restaurantRoutes);
 router.use('/categories', categoryRoutes);

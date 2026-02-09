@@ -42,7 +42,7 @@ export const errorHandler = (
   let code = err.code || null;
   const data = err.data || null;
 
-  // Log error
+
   if (statusCode >= 500) {
     logger.error('Server error:', {
       message: err.message,
@@ -59,7 +59,7 @@ export const errorHandler = (
     });
   }
 
-  // Sequelize validation errors
+
   if (err.name === 'SequelizeValidationError') {
     statusCode = 400;
     const seqErr = err as Error & { errors: Array<{ message: string }> };
@@ -67,7 +67,7 @@ export const errorHandler = (
     code = 'VALIDATION_ERROR';
   }
 
-  // Sequelize unique constraint errors
+
   if (err.name === 'SequelizeUniqueConstraintError') {
     statusCode = 409;
     const seqErr = err as Error & { errors: Array<{ path?: string }> };
@@ -76,14 +76,14 @@ export const errorHandler = (
     code = 'DUPLICATE_ENTRY';
   }
 
-  // Sequelize foreign key errors
+
   if (err.name === 'SequelizeForeignKeyConstraintError') {
     statusCode = 400;
     message = 'Referência inválida a um recurso inexistente';
     code = 'FOREIGN_KEY_ERROR';
   }
 
-  // JWT errors
+
   if (err.name === 'JsonWebTokenError') {
     statusCode = 401;
     message = 'Token inválido';
@@ -96,7 +96,7 @@ export const errorHandler = (
     code = 'TOKEN_EXPIRED';
   }
 
-  // Send response
+
   const response: ErrorResponse = {
     success: false,
     message,

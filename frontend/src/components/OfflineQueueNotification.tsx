@@ -104,14 +104,14 @@ export default function OfflineQueueNotification() {
 
   return (
     <>
-      {/* Indicador de Status Fixo */}
+
       <div className="fixed bottom-4 right-4 z-40">
         <div
           className={`rounded-lg shadow-lg overflow-hidden transition-all duration-300 ${
             expanded ? 'w-80' : 'w-auto'
           }`}
         >
-          {/* Header - Sempre visível */}
+
           <button
             onClick={() => setExpanded(!expanded)}
             className={`w-full flex items-center justify-between gap-3 p-3 ${
@@ -151,10 +151,10 @@ export default function OfflineQueueNotification() {
             )}
           </button>
 
-          {/* Conteúdo Expandido */}
+
           {expanded && (
             <div className="bg-white border border-t-0 rounded-b-lg max-h-80 overflow-y-auto">
-              {/* Pedidos Pendentes */}
+
               {pendingOrders.length > 0 && (
                 <div className="p-3 border-b">
                   <h4 className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
@@ -186,7 +186,7 @@ export default function OfflineQueueNotification() {
                 </div>
               )}
 
-              {/* Pedidos com Erro */}
+
               {failedOrders.length > 0 && (
                 <div className="p-3 border-b">
                   <h4 className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
@@ -233,7 +233,7 @@ export default function OfflineQueueNotification() {
                 </div>
               )}
 
-              {/* Pedidos Sincronizados */}
+
               {successOrders.length > 0 && (
                 <div className="p-3 border-b">
                   <h4 className="text-sm font-medium text-gray-700 mb-2 flex items-center justify-between">
@@ -269,7 +269,7 @@ export default function OfflineQueueNotification() {
                 </div>
               )}
 
-              {/* Ações */}
+
               <div className="p-3 bg-gray-50">
                 <button
                   onClick={handleSync}
@@ -289,7 +289,7 @@ export default function OfflineQueueNotification() {
         </div>
       </div>
 
-      {/* Modal de Conflito de Estoque */}
+
       {showConflictModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[80vh] overflow-hidden">

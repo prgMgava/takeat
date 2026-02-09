@@ -25,7 +25,6 @@ const transports: winston.transport[] = [
   }),
 ];
 
-// Add file transports in production
 if (process.env.NODE_ENV === 'production') {
   transports.push(
     new winston.transports.File({

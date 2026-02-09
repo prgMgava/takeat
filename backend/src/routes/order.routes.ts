@@ -5,8 +5,7 @@ import { authMiddleware, requireRole, validate } from '../middlewares';
 
 const router = Router();
 
-// Validation rules
-// Using matches() instead of isUUID() for more lenient UUID validation
+
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 const createOrderValidation = [
@@ -45,16 +44,16 @@ const listValidation = [
   query('endDate').optional().isISO8601(),
 ];
 
-// All routes require authentication
+
 router.use(authMiddleware);
 
-// Customer routes
+
 router.post('/', validate(createOrderValidation), orderController.create);
 router.get('/', validate(listValidation), orderController.findAll);
 router.get('/:id', orderController.findOne);
 router.post('/:id/cancel', validate(cancelOrderValidation), orderController.cancel);
 
-// Restaurant owner routes
+
 router.patch(
   '/:id/status',
   requireRole('RESTAURANT_OWNER', 'ADMIN'),

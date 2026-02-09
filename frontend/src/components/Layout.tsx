@@ -11,7 +11,7 @@ export default function Layout() {
   const userMenuRef = useRef<HTMLDivElement>(null);
   const { user, isAuthenticated, logout } = useAuthStore();
 
-  // Fechar menu ao clicar fora
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
@@ -145,7 +145,7 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      {/* Notificação de Fila Offline */}
+
       <OfflineQueueNotification />
 
       <footer className="bg-gray-800 text-white py-8 mt-12">

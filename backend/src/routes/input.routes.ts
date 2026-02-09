@@ -5,7 +5,7 @@ import { authMiddleware, requireRole, validate } from '../middlewares';
 
 const router = Router();
 
-// Validation rules
+
 const createInputValidation = [
   body('restaurantId').isUUID().withMessage('ID do restaurante inválido'),
   body('name').trim().notEmpty().withMessage('Nome é obrigatório'),
@@ -51,17 +51,17 @@ const listValidation = [
   query('limit').optional().isInt({ min: 1, max: 100 }),
 ];
 
-// Public route - check stock availability (no auth required)
+
 router.post(
   '/check-stock',
   validate(checkStockValidation),
   inputController.checkStockAvailability
 );
 
-// All routes below require authentication
+
 router.use(authMiddleware);
 
-// List inputs for a restaurant
+
 router.get(
   '/restaurant/:restaurantId',
   requireRole('ADMIN', 'RESTAURANT_OWNER'),
@@ -69,14 +69,14 @@ router.get(
   inputController.findByRestaurant
 );
 
-// Get product technical sheet (ficha técnica)
+
 router.get(
   '/product/:productId',
   requireRole('ADMIN', 'RESTAURANT_OWNER'),
   inputController.getProductInputs
 );
 
-// Set product technical sheet (ficha técnica)
+
 router.put(
   '/product/:productId',
   requireRole('ADMIN', 'RESTAURANT_OWNER'),
@@ -84,14 +84,14 @@ router.put(
   inputController.setProductInputs
 );
 
-// Get single input
+
 router.get(
   '/:id',
   requireRole('ADMIN', 'RESTAURANT_OWNER'),
   inputController.findOne
 );
 
-// Create input
+
 router.post(
   '/',
   requireRole('ADMIN', 'RESTAURANT_OWNER'),
@@ -99,7 +99,7 @@ router.post(
   inputController.create
 );
 
-// Update input
+
 router.put(
   '/:id',
   requireRole('ADMIN', 'RESTAURANT_OWNER'),
@@ -107,7 +107,7 @@ router.put(
   inputController.update
 );
 
-// Adjust stock
+
 router.post(
   '/:id/adjust-stock',
   requireRole('ADMIN', 'RESTAURANT_OWNER'),
@@ -115,7 +115,7 @@ router.post(
   inputController.adjustStock
 );
 
-// Delete input (soft delete)
+
 router.delete(
   '/:id',
   requireRole('ADMIN', 'RESTAURANT_OWNER'),

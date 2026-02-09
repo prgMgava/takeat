@@ -4,7 +4,7 @@ import { Search, Utensils, Clock, Star } from 'lucide-react';
 export default function Home() {
   return (
     <div>
-      {/* Hero Section */}
+
       <section className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center max-w-3xl mx-auto">
@@ -25,7 +25,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features */}
+
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">Como funciona</h2>
@@ -61,7 +61,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
+
       <section className="py-16 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">Tem um restaurante?</h2>

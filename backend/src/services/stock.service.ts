@@ -3,9 +3,6 @@ import { Input, ProductInput, Product } from '../models';
 import { AppError } from '../middlewares/error.middleware';
 import logger from '../utils/logger';
 
-/**
- * Interface para rastrear consumo de insumos
- */
 export interface InputConsumption {
   inputId: string;
   inputName: string;
@@ -14,9 +11,6 @@ export interface InputConsumption {
   available: number;
 }
 
-/**
- * Interface para status de estoque por produto
- */
 export interface ProductStockStatus {
   productId: string;
   productName: string;
@@ -30,18 +24,13 @@ export interface ProductStockStatus {
   }>;
 }
 
-/**
- * Interface para item do pedido (para cálculo de estoque)
- */
+
 export interface OrderItemForStock {
   productId: string;
   productName: string;
   quantity: number;
 }
 
-/**
- * Resultado da validação de estoque
- */
 export interface StockValidationResult {
   isValid: boolean;
   inputConsumptionMap: Map<string, InputConsumption>;
@@ -49,15 +38,7 @@ export interface StockValidationResult {
   productsWithIssues?: ProductStockStatus[];
 }
 
-/**
- * Service responsável pela gestão de estoque
- * Implementa validação e baixa atômica de insumos
- */
 class StockService {
-  /**
-   * Calcula a quantidade necessária de cada insumo para os itens do pedido
-   */
-  async calculateInputConsumption(
     orderItems: OrderItemForStock[],
     transaction?: Transaction
   ): Promise<{
@@ -68,7 +49,6 @@ class StockService {
     const productInputsMap = new Map<string, Array<{ inputId: string; quantityPerUnit: number }>>();
 
     for (const orderItem of orderItems) {
-      // Buscar a ficha técnica do produto
       const productInputs = await ProductInput.findAll({
         where: { productId: orderItem.productId },
         include: [{ model: Input, as: 'input' }],
@@ -104,9 +84,6 @@ class StockService {
     return { inputConsumptionMap, productInputsMap };
   }
 
-  /**
-   * Valida se há estoque suficiente para todos os insumos necessários
-   */
   validateStockAvailability(
     orderItems: OrderItemForStock[],
     inputConsumptionMap: Map<string, InputConsumption>,
@@ -114,14 +91,12 @@ class StockService {
   ): StockValidationResult {
     const insufficientInputsMap = new Map<string, InputConsumption>();
 
-    // Verificar se há estoque suficiente para TODOS os insumos
     for (const [inputId, consumption] of inputConsumptionMap) {
       if (consumption.available < consumption.required) {
         insufficientInputsMap.set(inputId, consumption);
       }
     }
 
-    // Se todos os insumos têm estoque suficiente
     if (insufficientInputsMap.size === 0) {
       return {
         isValid: true,
@@ -130,7 +105,6 @@ class StockService {
       };
     }
 
-    // Identificar quais produtos são afetados
     const productsWithIssues: ProductStockStatus[] = [];
 
     for (const orderItem of orderItems) {
@@ -166,28 +140,21 @@ class StockService {
     };
   }
 
-  /**
-   * Valida e decrementa o estoque atomicamente (dentro de uma transação)
-   * @throws AppError se não houver estoque suficiente
-   */
   async validateAndDecrementStock(
     orderItems: OrderItemForStock[],
     transaction: Transaction
   ): Promise<void> {
-    // Calcular consumo de insumos
     const { inputConsumptionMap, productInputsMap } = await this.calculateInputConsumption(
       orderItems,
       transaction
     );
 
-    // Validar disponibilidade
     const validationResult = this.validateStockAvailability(
       orderItems,
       inputConsumptionMap,
       productInputsMap
     );
 
-    // Se inválido, lançar erro com detalhes estruturados
     if (!validationResult.isValid) {
       const affectedProducts = validationResult.productsWithIssues!
         .filter(p => !p.available)
@@ -201,7 +168,6 @@ class StockService {
       );
     }
 
-    // Decrementar estoque atomicamente
     for (const [inputId, consumption] of inputConsumptionMap) {
       await Input.decrement(
         { stockQuantity: consumption.required },
@@ -214,9 +180,6 @@ class StockService {
     }
   }
 
-  /**
-   * Verifica disponibilidade de estoque sem modificar (para consultas)
-   */
   async checkStockAvailability(
     items: Array<{ productId: string; quantity: number }>
   ): Promise<{
@@ -279,9 +242,7 @@ class StockService {
     };
   }
 
-  /**
-   * Reverte a baixa de estoque (para rollback manual ou cancelamento)
-   */
+
   async revertStockDecrement(
     orderItems: OrderItemForStock[],
     transaction?: Transaction
@@ -300,9 +261,6 @@ class StockService {
     }
   }
 
-  /**
-   * Ajusta estoque de um insumo específico
-   */
   async adjustStock(
     inputId: string,
     adjustment: number,

@@ -5,7 +5,7 @@ import { authMiddleware, requireRole, validate, optionalAuth } from '../middlewa
 
 const router = Router();
 
-// Validation rules
+
 const createProductValidation = [
   body('restaurantId').isUUID().withMessage('ID do restaurante inválido'),
   body('categoryId').optional().isUUID().withMessage('ID da categoria inválido'),
@@ -42,11 +42,11 @@ const listValidation = [
   query('limit').optional().isInt({ min: 1, max: 100 }),
 ];
 
-// Public routes
+
 router.get('/restaurant/:restaurantId', optionalAuth, validate(listValidation), productController.findByRestaurant);
 router.get('/:id', optionalAuth, productController.findOne);
 
-// Protected routes
+
 router.post(
   '/',
   authMiddleware,

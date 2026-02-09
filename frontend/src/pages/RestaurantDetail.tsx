@@ -60,7 +60,7 @@ export default function RestaurantDetail() {
 
   return (
     <div className="pb-24 lg:pb-8">
-      {/* Back Button - Mobile */}
+
       <div className="lg:hidden sticky top-16 z-20 bg-white border-b px-4 py-2">
         <Link to="/restaurants" className="flex items-center text-gray-600 hover:text-gray-900">
           <ChevronLeft className="h-5 w-5" />
@@ -68,7 +68,7 @@ export default function RestaurantDetail() {
         </Link>
       </div>
 
-      {/* Banner */}
+
       <div className="h-40 sm:h-48 md:h-64 relative">
         <img
           src={restaurant.bannerUrl || 'https://placehold.co/1200x400/gray/white?text=Restaurant'}
@@ -86,7 +86,7 @@ export default function RestaurantDetail() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 sm:-mt-16 relative z-10">
-        {/* Restaurant Info */}
+
         <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6">
           <div className="flex flex-col sm:flex-row sm:items-start gap-4">
             {restaurant.logoUrl && (
@@ -132,9 +132,9 @@ export default function RestaurantDetail() {
           </div>
         </div>
 
-        {/* Categories and Products */}
+
         <div className="grid lg:grid-cols-4 gap-6 lg:gap-8">
-          {/* Category Sidebar - Desktop */}
+
           <div className="hidden lg:block lg:col-span-1">
             <div className="bg-white rounded-lg shadow-md p-4 sticky top-20">
               <h2 className="font-semibold mb-3">Categorias</h2>
@@ -156,7 +156,7 @@ export default function RestaurantDetail() {
             </div>
           </div>
 
-          {/* Category Pills - Mobile */}
+
           <div className="lg:hidden overflow-x-auto -mx-4 px-4">
             <div className="flex gap-2 pb-2">
               {categories.map((category) => (
@@ -175,7 +175,7 @@ export default function RestaurantDetail() {
             </div>
           </div>
 
-          {/* Products */}
+
           <div className="lg:col-span-3">
             {currentCategory && (
               <div>
@@ -204,7 +204,7 @@ export default function RestaurantDetail() {
         </div>
       </div>
 
-      {/* Floating Cart Button - Mobile */}
+
       {cartItemCount > 0 && (
         <div className="lg:hidden fixed bottom-4 left-4 right-4 z-30">
           <Link
