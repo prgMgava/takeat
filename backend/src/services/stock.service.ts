@@ -39,6 +39,7 @@ export interface StockValidationResult {
 }
 
 class StockService {
+  async calculateInputConsumption(
     orderItems: OrderItemForStock[],
     transaction?: Transaction
   ): Promise<{
